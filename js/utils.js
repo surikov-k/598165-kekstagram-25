@@ -1,5 +1,10 @@
 const checkLength = (string, length) => string.length <= length;
 
+const createIdGenerator = () => {
+  let lastGeneratedId = 0;
+  return () => ++lastGeneratedId;
+};
+
 const getRandomInt = (a, b) => {
   const [from, to] = [
     Math.ceil(Math.min((Math.abs(a)), (Math.abs(b)))),
@@ -21,6 +26,7 @@ const shuffle = (array) => {
 
 export {
   checkLength,
+  createIdGenerator,
   getRandomFromArray,
   getRandomInt,
   shuffle,

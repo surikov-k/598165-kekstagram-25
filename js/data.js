@@ -1,4 +1,4 @@
-import {getRandomFromArray, getRandomInt, shuffle} from './utils.js';
+import {createIdGenerator, getRandomFromArray, getRandomInt, shuffle} from './utils.js';
 
 const MIN_COMMENTS = 0;
 const MAX_COMMENTS = 4;
@@ -29,32 +29,36 @@ const DESCRIPTIONS = [
   'Отдыхаем... #chill #relax #group #photo',
 ];
 
+const getPostId = createIdGenerator();
+const getCommentId = createIdGenerator();
 
 const createCommentMessage = (array) => {
   const commentLength = getRandomInt(1, 2);
   return shuffle(array).slice(0, commentLength).join(' ');
 };
 
-const createComment = (postId, commentId) => (
+const createComment = () => (
   {
-    id: parseInt(postId.toString() + commentId.toString(), 10),
+    id: getCommentId(),
     avatar: `img/avatar-${getRandomInt(1, 6)}`,
     message: createCommentMessage(MESSAGES),
     name: getRandomFromArray(NAMES)
   });
 
-const getComments = (postId, limit) => new Array(limit)
+const getComments = (limit) => new Array(limit)
   .fill({})
-  .map((_, commentId) => createComment(postId, commentId));
+  .map(() => createComment());
 
-const createPost = (id) => ({
-  id: id,
-  url: `photos/${id}.jpg`,
+const createPost = () => ({
+  id: getPostId(),
+  get url() {
+    return `photos/${this.id}.jpg`;
+  },
   description: getRandomFromArray(DESCRIPTIONS),
   likes: getRandomInt(15, 200),
-  comments: getComments(id, getRandomInt(MIN_COMMENTS, MAX_COMMENTS))
+  comments: getComments(getRandomInt(MIN_COMMENTS, MAX_COMMENTS))
 });
 
-const getPosts = (limit) => new Array(limit).fill({}).map((_, id) => createPost(id));
+const getPosts = (limit) => new Array(limit).fill({}).map(() => createPost());
 
 export {getPosts};
