@@ -1,5 +1,6 @@
 import {getPosts} from './data.js';
+import {renderPosts} from './render.js';
 
 const LIMIT = 25;
 
-getPosts(LIMIT);
+renderPosts(getPosts(LIMIT));

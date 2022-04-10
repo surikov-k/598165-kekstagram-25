@@ -5,12 +5,29 @@ const createIdGenerator = () => {
   return () => ++lastGeneratedId;
 };
 
+
 const getRandomInt = (a, b) => {
   const [from, to] = [
-    Math.ceil(Math.min((Math.abs(a)), (Math.abs(b)))),
+    Math.floor(Math.min((Math.abs(a)), (Math.abs(b)))),
     Math.ceil(Math.max((Math.abs(a)), (Math.abs(b))))
   ];
   return Math.floor(Math.random() * (to - from + 1) + from);
+};
+
+const createRandomIdFromRangeGenerator = (min, max) => {
+  const generatedValues = [];
+
+  return () => {
+    let value = getRandomInt(min, max);
+    if (generatedValues.length >= max - min + 1) {
+      throw new Error(`All integers from the range [${min}, ${max}] has been returned`);
+    }
+    while (generatedValues.includes(value)) {
+      value = getRandomInt(min, max);
+    }
+    generatedValues.push(value);
+    return value;
+  };
 };
 
 const getRandomFromArray = (array) => array[getRandomInt(0, array.length - 1)];
@@ -26,6 +43,7 @@ const shuffle = (array) => {
 
 export {
   checkLength,
+  createRandomIdFromRangeGenerator,
   createIdGenerator,
   getRandomFromArray,
   getRandomInt,

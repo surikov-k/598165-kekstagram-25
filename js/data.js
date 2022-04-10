@@ -1,7 +1,16 @@
-import {createIdGenerator, getRandomFromArray, getRandomInt, shuffle} from './utils.js';
+import {
+  createIdGenerator,
+  createRandomIdFromRangeGenerator,
+  getRandomFromArray,
+  getRandomInt,
+  shuffle
+} from './utils.js';
 
 const MIN_COMMENTS = 0;
 const MAX_COMMENTS = 4;
+
+const MIN_POST_ID = 1;
+const MAX_POST_ID = 25;
 
 const NAMES = ['Аким', 'Ким', 'Николай', 'Степан', 'Тимур', 'Харитон'];
 
@@ -29,7 +38,7 @@ const DESCRIPTIONS = [
   'Отдыхаем... #chill #relax #group #photo',
 ];
 
-const getPostId = createIdGenerator();
+const getPostId = createRandomIdFromRangeGenerator(MIN_POST_ID, MAX_POST_ID);
 const getCommentId = createIdGenerator();
 
 const createCommentMessage = (array) => {
