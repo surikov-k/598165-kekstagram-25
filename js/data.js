@@ -49,14 +49,14 @@ const createCommentMessage = (array) => {
 const createComment = () => (
   {
     id: getCommentId(),
-    avatar: `img/avatar-${getRandomInt(1, 6)}`,
+    avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
     message: createCommentMessage(MESSAGES),
     name: getRandomFromArray(NAMES)
   });
 
 const getComments = (limit) => new Array(limit)
   .fill({})
-  .map(() => createComment());
+  .map(createComment);
 
 const createPost = () => ({
   id: getPostId(),
@@ -68,6 +68,6 @@ const createPost = () => ({
   comments: getComments(getRandomInt(MIN_COMMENTS, MAX_COMMENTS))
 });
 
-const getPosts = (limit) => new Array(limit).fill({}).map(() => createPost());
+const getPosts = (limit) => new Array(limit).fill({}).map(createPost);
 
 export {getPosts};
