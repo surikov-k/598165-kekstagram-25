@@ -1,17 +1,4 @@
-const popup = document.querySelector('.big-picture');
-const image = popup.querySelector('.big-picture__img img');
-const likesCount = popup.querySelector('.likes-count');
-const commentsCount = popup.querySelector('.comments-count');
-const socialCommentsCount = popup.querySelector('.social__comment-count');
-const socialCommentsLoader = popup.querySelector('.social__comments-loader');
-const socialComments = popup.querySelector('.social__comments');
-const socialComment = popup.querySelector('.social__comment');
-const socialCaption = popup.querySelector('.social__caption');
-
-const closeButton = document.querySelector('.big-picture__cancel');
-
-
-const toggleVisibility = (show) => {
+const toggleVisibility = (popup, show) => {
   if (show) {
     return popup.classList.remove('hidden');
   }
@@ -25,62 +12,40 @@ const toggleScroll = (lock) => {
   document.body.classList.remove('modal-open');
 };
 
-const renderPost = ({comments, description, likes, url}) => {
-  image.src = url;
-  image.alt = description;
-  likesCount.textContent = likes;
-  commentsCount.textContent = comments.length;
-  socialCaption.textContent = description;
-};
-
-const renderComments = (comments) => {
-
-  socialComments.innerHTML = '';
-  const fragment = document.createDocumentFragment();
-
-  comments.forEach(({avatar, message, name}) => {
-    const commentNode = socialComment.cloneNode(true);
-    const avatarNode = commentNode.querySelector('.social__picture');
-    const textNode = commentNode.querySelector('.social__text');
-
-    avatarNode.src = avatar;
-    avatarNode.alt = name;
-    textNode.innerText = message;
-
-    fragment.appendChild(commentNode);
-  });
-
-  socialComments.appendChild(fragment);
-};
-
-const escapeKeydownHandler = (evt) => {
-  evt.preventDefault();
-
-  if (evt.key === 'Escape') {
-    document.removeEventListener('keydown', escapeKeydownHandler);
-    toggleVisibility(false);
-    toggleScroll(false);
-  }
-};
-
-const closeHandler = () => {
-  document.removeEventListener('keydown', escapeKeydownHandler);
-  toggleVisibility(false);
+const close = (popup) => {
+  toggleVisibility(popup, false);
   toggleScroll(false);
 };
 
-const open = (post) => {
-  closeButton.addEventListener('click', closeHandler);
-  document.addEventListener('keydown', escapeKeydownHandler);
+const open = (
+  popup,
+  onOpen = () => {},
+  onClose = () => {}
+) => {
+  const closeButton = popup.querySelector('.cancel');
 
-  socialCommentsCount.classList.add('hidden');
-  socialCommentsLoader.classList.add('hidden');
+  const onEscKeydown = (evt) => {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      document.removeEventListener('keydown', onEscKeydown);
+      close(popup);
+      onClose();
+    }
+  };
 
-  renderPost(post);
-  renderComments(post.comments);
+  const onCloseButtonClick = () => {
+    document.removeEventListener('keydown', onEscKeydown);
+    closeButton.removeEventListener('click', onCloseButtonClick);
+    close(popup);
+    onClose();
+  };
 
+  closeButton.addEventListener('click', onCloseButtonClick);
+  document.addEventListener('keydown', onEscKeydown);
+
+  onOpen();
+  toggleVisibility(popup, true);
   toggleScroll(true);
-  toggleVisibility(true);
 };
 
 export {
