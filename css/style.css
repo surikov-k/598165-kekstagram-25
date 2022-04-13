@@ -366,7 +366,50 @@ main {
   outline: auto 5px highlight;
 }
 
+.has-danger > .text__hashtags {
+  margin-bottom: 0;
+}
 
+.has-danger .text__hashtags:focus,
+.has-danger .text__description:focus {
+  outline: auto 5px var(--textcolor);
+}
+
+.img-upload__element:not(:last-child).has-danger {
+  margin-bottom: 20px;
+}
+.img-upload__element {
+  --bgcolor: rgb(244, 210, 210);
+  --textcolor: rgb(177, 0, 0);
+  position: relative;
+  display: block;
+}
+.img-upload__error {
+  position: absolute;
+  text-transform: initial;
+  text-align: left;
+  width: max-content;
+  padding: 10px 30px;
+  border-radius: 5px;
+  max-width: 290px;
+  left: 92%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bgcolor);
+  color:  var(--textcolor);
+}
+
+.img-upload__error::before {
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: var(--bgcolor);
+}
 /* Окно для редактирования изображения
    ========================================================================== */
 
