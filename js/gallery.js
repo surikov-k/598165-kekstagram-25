@@ -1,5 +1,5 @@
 import {openPopup} from './popup.js';
-import {renderPost} from './post.js';
+import {renderPost, resetComments} from './post.js';
 
 const gallery = document.querySelector('.pictures');
 const postPopup = document.querySelector('.big-picture');
@@ -32,7 +32,7 @@ const setup = (posts) => {
 
       const targetPostId = parseInt(evt.target.closest('.picture').dataset.id, 10);
       const targetPost = posts.find((post) => post.id === targetPostId);
-      openPopup(postPopup, () => renderPost(targetPost));
+      openPopup(postPopup, () => renderPost(targetPost), resetComments);
     }
   });
   renderPreviews(posts);

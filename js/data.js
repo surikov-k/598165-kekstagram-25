@@ -7,7 +7,7 @@ import {
 } from './utils.js';
 
 const MIN_COMMENTS = 0;
-const MAX_COMMENTS = 4;
+const MAX_COMMENTS = 20;
 
 const MIN_POST_ID = 1;
 const MAX_POST_ID = 25;
