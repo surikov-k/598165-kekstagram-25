@@ -1,9 +1,4 @@
-const toggleVisibility = (popup, show) => {
-  if (show) {
-    return popup.classList.remove('hidden');
-  }
-  return popup.classList.add('hidden');
-};
+import {toggleVisibility} from './utils.js';
 
 const toggleScroll = (lock) => {
   if (lock) {
@@ -34,10 +29,10 @@ const open = (
   };
 
   const onCloseButtonClick = () => {
+    onClose();
+    close(popup);
     document.removeEventListener('keydown', onEscKeydown);
     closeButton.removeEventListener('click', onCloseButtonClick);
-    close(popup);
-    onClose();
   };
 
   closeButton.addEventListener('click', onCloseButtonClick);

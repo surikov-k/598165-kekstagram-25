@@ -41,6 +41,14 @@ const shuffle = (array) => {
   return result;
 };
 
+const toggleVisibility = (element, show) => {
+  if (show) {
+    return element.classList.remove('hidden');
+  }
+  return element.classList.add('hidden');
+};
+
+
 export {
   checkLength,
   createRandomIdFromRangeGenerator,
@@ -48,4 +56,5 @@ export {
   getRandomFromArray,
   getRandomInt,
   shuffle,
+  toggleVisibility
 };

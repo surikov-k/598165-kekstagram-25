@@ -5,12 +5,17 @@ import {
   validateDescription,
   validateTags
 } from './validation.js';
+import {resetImageScale, setupImageScale} from './scale-image.js';
+import {resetEffects, setupEffects} from './effects.js';
 
 const form = document.querySelector('#upload-select-image');
 const popup = document.querySelector('.img-upload__overlay');
 const submitButton = form.querySelector('#upload-submit');
 
 const setup = () => {
+  setupImageScale();
+  setupEffects();
+
   const pristine = new Pristine(form, {
     classTo: 'img-upload__element',
     errorTextParent: 'img-upload__element',
@@ -20,7 +25,11 @@ const setup = () => {
   const uploadFile = document.querySelector('#upload-file');
 
   uploadFile.addEventListener('change', () => {
-    openPopup(popup, () => {}, () => form.reset());
+    openPopup(popup, () => {}, () => {
+      form.reset();
+      resetImageScale();
+      resetEffects();
+    });
   });
 
   pristine.addValidator(
