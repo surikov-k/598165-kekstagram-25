@@ -32,7 +32,10 @@ const setup = (posts) => {
 
       const targetPostId = parseInt(evt.target.closest('.picture').dataset.id, 10);
       const targetPost = posts.find((post) => post.id === targetPostId);
-      openPopup(postPopup, () => renderPost(targetPost), resetComments);
+      openPopup(postPopup, {
+        onOpen: () => renderPost(targetPost),
+        onClose: resetComments
+      });
     }
   });
   renderPreviews(posts);

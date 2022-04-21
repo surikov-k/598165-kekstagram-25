@@ -1,10 +1,11 @@
-import {getPosts} from './data.js';
 import {setupGallery} from './gallery.js';
 import {setupForm} from './form.js';
+import {getPosts} from './api.js';
 
-const LIMIT = 25;
-const posts = getPosts(LIMIT);
+getPosts()
+  .then((posts) => {
+    setupGallery(posts);
+    setupForm();
+  });
 
-setupGallery(posts);
-setupForm();
 
