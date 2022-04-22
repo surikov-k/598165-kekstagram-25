@@ -48,6 +48,13 @@ const toggleVisibility = (element, show) => {
   return element.classList.add('hidden');
 };
 
+const debounce = (fn, delay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(null, rest), delay);
+  };
+};
 
 export {
   checkLength,
@@ -55,6 +62,7 @@ export {
   createIdGenerator,
   getRandomFromArray,
   getRandomInt,
+  debounce,
   shuffle,
   toggleVisibility
 };

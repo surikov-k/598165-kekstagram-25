@@ -24,6 +24,12 @@ const renderPreviews = (posts) => {
   picturesContainer.append(fragment);
 };
 
+const clearPreviews = () => {
+  const previews = gallery.querySelectorAll('.picture');
+  previews.forEach((preview) => preview.remove());
+};
+
+
 const setup = (posts) => {
   gallery.addEventListener('click', (evt) => {
 
@@ -41,4 +47,8 @@ const setup = (posts) => {
   renderPreviews(posts);
 };
 
-export {setup as setupGallery};
+export {
+  setup as setupGallery,
+  renderPreviews,
+  clearPreviews,
+};
