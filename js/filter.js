@@ -64,7 +64,6 @@ const show = () => {
   filter.classList.remove('img-filters--inactive');
 };
 
-
 const setup = (posts) => {
   const renderDebounced = debounce((target) => render(target, posts), DEBOUNCE_DELAY);
   show();

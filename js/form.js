@@ -8,6 +8,7 @@ import {
 import {resetImageScale, setupImageScale} from './scale-image.js';
 import {resetEffects, setupEffects} from './effects.js';
 import {sendPost} from './api.js';
+import {resetPreview, setupPreview} from './preview.js';
 
 const form = document.querySelector('#upload-select-image');
 const popup = document.querySelector('.img-upload__overlay');
@@ -21,6 +22,7 @@ const reset = () => {
   form.reset();
   resetEffects();
   resetImageScale();
+  resetPreview();
 };
 
 const onSuccessSubmit = () => {
@@ -52,6 +54,7 @@ const setup = () => {
   setupImageScale();
   setupEffects();
   setupMessages();
+  setupPreview();
 
   const pristine = new Pristine(form, {
     classTo: 'img-upload__element',
@@ -88,7 +91,6 @@ const setup = () => {
         .catch(onErrorSubmit);
     }
   });
-
 };
 
 export {setup as setupForm};
